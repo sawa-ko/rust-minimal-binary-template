@@ -1,0 +1,27 @@
+rules:
+  description-max-length:
+    level: error
+    length: 100
+
+  subject-empty:
+    level: error
+
+  description-empty:
+    level: error
+
+  type-format:
+    level: error
+    format: ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)$
+
+  description-format:
+    level: error
+    format: ^[a-z][^.]*([.][^.]+)*$
+
+  scope:
+    level: error
+    options:
+      - commands
+      - core
+      - shared
+      - ci
+      - release

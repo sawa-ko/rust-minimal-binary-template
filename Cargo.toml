@@ -1,0 +1,18 @@
+[package]
+name = "rust-minimal-binary-template"
+description = "Minimal template for new binary rust projects."
+homepage = "https://naeko.moe/"
+license-file = "LICENSE"
+repository = "https://github.com/naeko-team/naeko-rust"
+version = "0.0.1"
+edition = "2021"
+authors = [
+    "sawa-ko <56084970+sawa-ko@users.noreply.github.com>"
+]
+
+[dependencies]
+
+[package.metadata.bin]
+rusty-hook = { version = "0.11.2" }
+commitlint-rs = { version = "0.1.11", bins = ["commitlint"] }
+git-cliff = { version = "2.4.0" }

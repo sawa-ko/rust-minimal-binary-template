@@ -1,0 +1,29 @@
+{
+	"extends": [
+		"config:base",
+		"group:recommended",
+		"group:allNonMajor"
+	],
+	"packageRules": [
+		{
+			"updateTypes": [
+				"minor",
+				"patch"
+			],
+			"automerge": true
+		}
+	],
+	"schedule": [
+		"before 3am on the first day of the month"
+	],
+	"timezone": "UTC",
+	"platform": "github",
+	"semanticCommits": "enabled",
+	"semanticCommitScope": "deps",
+	"bumpVersion": "patch",
+	"useBaseBranchConfig": "merge",
+	"rebaseWhen": "conflicted",
+	"baseBranches": [
+		"main"
+	]
+}

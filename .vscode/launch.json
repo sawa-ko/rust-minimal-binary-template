@@ -1,0 +1,117 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in library 'commands'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--lib",
+          "--package=commands"
+        ],
+        "filter": {
+          "name": "commands",
+          "kind": "lib"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in library 'shared'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--lib",
+          "--package=shared"
+        ],
+        "filter": {
+          "name": "shared",
+          "kind": "lib"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'release'",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=release",
+          "--package=release"
+        ],
+        "filter": {
+          "name": "release",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'release'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--bin=release",
+          "--package=release"
+        ],
+        "filter": {
+          "name": "release",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'naeko-bot'",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=naeko-bot",
+          "--package=naeko-bot"
+        ],
+        "filter": {
+          "name": "naeko-bot",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'naeko-bot'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--bin=naeko-bot",
+          "--package=naeko-bot"
+        ],
+        "filter": {
+          "name": "naeko-bot",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
