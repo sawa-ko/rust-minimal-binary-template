@@ -20,7 +20,6 @@ rules:
   scope:
     level: error
     options:
-      - commands
       - core
       - shared
       - ci
