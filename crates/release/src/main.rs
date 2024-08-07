@@ -14,12 +14,20 @@ fn main() {
 
     println!("ℹ️ Parse git-cliff version");
 
-    if Command::new("git-cliff").status().is_err() {
-        eprintln!(
-            "✖️ git-cliff command not found. Please install git-cliff (https://git-cliff.org/docs/installation)."
-        );
+    let get_git_cliff_version = Command::new("cargo")
+        .args(["bin", "git-cliff", "--version"])
+        .output()
+        .expect("✖️ Failed to get git-cliff version");
+
+    if get_git_cliff_version.status.code().expect("✖️ Failed to get git-cliff version code") != 0 {
+        eprintln!("✖️ Failed to get git-cliff version");
         std::process::exit(1);
     }
+
+    let git_cliff_version =
+        from_utf8(&get_git_cliff_version.stdout).expect("✖️ Failed to convert git-cliff version to string").trim();
+
+    println!("👌 The git-cliff version is: {}", git_cliff_version);
 
     let version = Command::new("cargo")
         .args(["bin", "git-cliff", "--bumped-version"])
