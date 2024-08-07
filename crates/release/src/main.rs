@@ -6,7 +6,9 @@ fn main() {
     println!("ℹ️ Parse git-cliff version");
 
     if Command::new("git-cliff").status().is_err() {
-        eprintln!("✖️ git-cliff command not found. Please install git-cliff.");
+        eprintln!(
+            "✖️ git-cliff command not found. Please install git-cliff (https://git-cliff.org/docs/installation)."
+        );
         std::process::exit(1);
     }
 
