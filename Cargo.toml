@@ -4,7 +4,7 @@ description = "Minimal template for new binary rust projects."
 homepage = "https://naeko.moe/"
 license-file = "LICENSE"
 repository = "https://github.com/naeko-team/naeko-rust"
-version = ""
+version = "0.1.0"
 edition = "2021"
 authors = [
     "sawa-ko <56084970+sawa-ko@users.noreply.github.com>"
