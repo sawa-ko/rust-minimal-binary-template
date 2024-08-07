@@ -3,6 +3,15 @@ use std::str::from_utf8;
 use std::{env, fs};
 
 fn main() {
+    println!("ℹ️ Check if the create cargo-run-bin is installed");
+
+    if Command::new("cargo").args(["bin"]).status().is_err() {
+        eprintln!(
+            "✖️ cargo-run-bin is not installed. Please install cargo-run-bin with 'cargo install cargo-run-bin'."
+        );
+        std::process::exit(1);
+    }
+
     println!("ℹ️ Parse git-cliff version");
 
     if Command::new("git-cliff").status().is_err() {
