@@ -10,7 +10,8 @@ authors = [
     "sawa-ko <56084970+sawa-ko@users.noreply.github.com>"
 ]
 
-[dependencies]
+[workspace]
+members = ["crates/release"]
 
 [package.metadata.bin]
 rusty-hook = { version = "0.11.2" }
