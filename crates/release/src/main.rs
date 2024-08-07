@@ -5,10 +5,10 @@ use std::{env, fs};
 fn main() {
     println!("ℹ️ Check if the create cargo-run-bin is installed");
 
-    if Command::new("cargo").args(["bin"]).status().is_err() {
-        eprintln!(
-            "✖️ cargo-run-bin is not installed. Please install cargo-run-bin with 'cargo install cargo-run-bin'."
-        );
+    let cargo_run_bin = Command::new("cargo").args(["bin"]).output().expect("✖️ cargo-run-bin crate is not installed");
+
+    if cargo_run_bin.status.code().expect("✖️ Failed to check cargo-run-bin code") != 0 {
+        eprintln!("✖️ cargo-run-bin crate is not installed");
         std::process::exit(1);
     }
 
