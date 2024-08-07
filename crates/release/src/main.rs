@@ -5,10 +5,21 @@ use std::{env, fs};
 fn main() {
     println!("ℹ️ Parse git-cliff version");
 
+    if Command::new("git-cliff").status().is_err() {
+        eprintln!("✖️ git-cliff command not found. Please install git-cliff.");
+        std::process::exit(1);
+    }
+
     let version = Command::new("cargo")
         .args(["bin", "git-cliff", "--bumped-version"])
         .output()
         .expect("Failed to get version with git-cliff");
+
+    if version.status.code().expect("✖️ Failed to get version code") != 0 {
+        eprintln!("✖️ Failed to get version with git-cliff");
+        std::process::exit(1);
+    }
+
     let version = from_utf8(&version.stdout).expect("✖️ Failed to convert version to string").trim();
 
     println!("👌 The new version is: {}", version);
@@ -20,16 +31,30 @@ fn main() {
     update_cargo_toml_version(version);
 
     println!("ℹ️ Update Cargo.lock");
-    Command::new("cargo").args(["generate-lockfile"]).output().expect("✖️ Failed to update Cargo.lock");
+
+    let update_cargo_lock =
+        Command::new("cargo").args(["generate-lockfile"]).output().expect("✖️ Failed to update Cargo.lock");
+
+    if update_cargo_lock.status.code().expect("✖️ Failed to update Cargo.lock code") != 0 {
+        eprintln!("✖️ Failed to update Cargo.lock");
+        std::process::exit(1);
+    }
 
     println!("ℹ️ Generate changelog");
-    Command::new("cargo")
+
+    let generate_changelog = Command::new("cargo")
         .args(["bin", "git-cliff", "--bump", "--output", "CHANGELOG.md"])
         .output()
         .expect("✖️ Failed to generate changelog with git-cliff");
 
+    if generate_changelog.status.code().expect("✖️ Failed to generate changelog code") != 0 {
+        eprintln!("✖️ Failed to generate changelog with git-cliff");
+        std::process::exit(1);
+    }
+
     println!("⌛ Commiting changes");
-    Command::new("git")
+
+    let commit_changes = Command::new("git")
         .args([
             "commit",
             "-am",
@@ -38,14 +63,40 @@ fn main() {
         .output()
         .expect("✖️ Failed to commit the new version");
 
+    if commit_changes.status.code().expect("✖️ Failed to commit the new version code") != 0 {
+        eprintln!("✖️ Failed to commit the new version");
+        std::process::exit(1);
+    }
+
     println!("⌛ Tagging the new version");
-    Command::new("git").args(["tag", version]).output().expect("✖️ Failed to tag the new version");
+
+    let tagging_version =
+        Command::new("git").args(["tag", version]).output().expect("✖️ Failed to tag the new version");
+
+    if tagging_version.status.code().expect("✖️ Failed to tag the new version code") != 0 {
+        eprintln!("✖️ Failed to tag the new version");
+        std::process::exit(1);
+    }
 
     println!("⌛ Pushing the new version to the repository");
-    Command::new("git").args(["push", "origin", "main"]).output().expect("✖️ Failed to push the new version");
+
+    let git_push =
+        Command::new("git").args(["push", "origin", "main"]).output().expect("✖️ Failed to push the new version");
+
+    if git_push.status.code().expect("✖️ Failed to push the new version code") != 0 {
+        eprintln!("✖️ Failed to push the new version");
+        std::process::exit(1);
+    }
 
     println!("⌛ Pushing the new tag to the repository");
-    Command::new("git").args(["push", "origin", "tag", version]).output().expect("✖️ Failed to push the new tag");
+
+    let git_push_tag =
+        Command::new("git").args(["push", "origin", "tag", version]).output().expect("✖️ Failed to push the new tag");
+
+    if git_push_tag.status.code().expect("✖️ Failed to push the new tag code") != 0 {
+        eprintln!("✖️ Failed to push the new tag");
+        std::process::exit(1);
+    }
 
     println!("✅ Release process completed successfully");
 }
